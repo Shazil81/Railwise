@@ -31,7 +31,7 @@
   justify-content: center;
   background: var(--gradient-hero);
   border-radius: var(--radius-sm);
-  color: white;
+  color:var(--rail-surface);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
 }
 
@@ -41,10 +41,9 @@
   letter-spacing: -0.3px;
 }
 .nav-highlight {
-  background: var(--gradient-hero);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: none;
+  color: var(--rail-brand-dark);
+  -webkit-text-fill-color: currentColor;
 }
 
 .nav-actions {

@@ -1,7 +1,17 @@
 import type { ResultFilters as Filters } from '../results';
+import {useEffect,useState} from 'react';
+import {SlidersHorizontal,ChevronDown} from 'lucide-react';
 export default function ResultFilters({value,onChange,onReset}:{value:Filters;onChange:(value:Filters)=>void;onReset:()=>void}) {
+  const [expanded,setExpanded]=useState(()=>typeof window==='undefined'||!window.matchMedia('(max-width: 750px)').matches);
+  useEffect(()=>{
+    const query=window.matchMedia('(max-width: 750px)');
+    const changed=()=>setExpanded(!query.matches);
+    query.addEventListener('change',changed);
+    return()=>query.removeEventListener('change',changed);
+  },[]);
   const set=(field:keyof Filters,next:string)=>onChange({...value,[field]:next});
-  return <section className="result-filters" aria-label="Filter and sort trains">
+  return <details className="result-filters" aria-label="Filter and sort trains" open={expanded} onToggle={event=>setExpanded(event.currentTarget.open)}>
+    <summary className="filter-toggle"><SlidersHorizontal size={18}/> Filters and sorting <ChevronDown size={18}/></summary>
     <div className="filter-heading"><h3>Find your best journey</h3><button type="button" className="text-button" onClick={onReset}>Reset filters</button></div>
     <div className="filter-grid">
       <label>Departure time (IST)<select value={value.departure} onChange={e=>set('departure',e.target.value)}><option value="any">Any departure</option><option value="night">00:00–06:00</option><option value="morning">06:00–12:00</option><option value="afternoon">12:00–18:00</option><option value="evening">18:00–24:00</option></select></label>
@@ -10,5 +20,5 @@ export default function ResultFilters({value,onChange,onReset}:{value:Filters;on
       <label>Maximum duration (hours)<input type="number" min="0" step="0.5" placeholder="Any duration" value={value.maxDuration} onChange={e=>set('maxDuration',e.target.value)}/></label>
       <label>Sort by<select value={value.sort} onChange={e=>set('sort',e.target.value)}><option value="departure-asc">Departure: earliest first</option><option value="departure-desc">Departure: latest first</option><option value="fare-asc">Fare: low to high</option><option value="fare-desc">Fare: high to low</option><option value="duration-asc">Duration: shortest first</option><option value="duration-desc">Duration: longest first</option></select></label>
     </div><p>Fares are per passenger, based on the lowest fare among the displayed classes. Times and duration use the actual boarding and arrival stations.</p>
-  </section>;
+  </details>;
 }

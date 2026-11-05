@@ -1,0 +1,47 @@
+/* Canonical Railwise design tokens. Keep shared colors and typography here. */
+:root {
+  font-family: var(--rail-font);
+  color: var(--rail-ink);
+  background: var(--rail-bg);
+  font-synthesis: none;
+  --bg-primary: #f7f9fc;
+  --bg-secondary: #f0f4fa;
+  --bg-card: #fff;
+  --bg-input: #f8fafc;
+  --border-default: var(--rail-line);
+  --border-subtle: #e9edf3;
+  --text-primary: var(--rail-ink);
+  --text-secondary: var(--rail-muted);
+  --text-tertiary: #6c7a90;
+  --text-muted: #68768a;
+  --accent: var(--rail-brand);
+  --accent-light: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-glow: #edf3ff;
+  --success: #087f64;
+  --success-bg: #e5f6f0;
+  --danger: #b42338;
+  --danger-bg: #fff1f2;
+  --radius-md: 9px;
+  --radius-xl: 18px;
+  --radius-full: 999px;
+  --font-mono: Consolas,monospace;
+  --gradient-hero: linear-gradient(115deg,#2563eb,#386ff0);
+  --rail-ink: #172b46;
+  --rail-muted: #526179;
+  --rail-brand: #1e3a8a;
+  --rail-brand-dark: #142d52;
+  --rail-accent: #b9430a;
+  --rail-accent-hover: #923207;
+  --rail-bg: #f4f6fa;
+  --rail-surface: #ffffff;
+  --rail-line: #d8e1ed;
+  --rail-soft: #edf2f9;
+  --rail-warm: #fff4e8;
+  --rail-success: #16634b;
+  --rail-danger: #a62e46;
+  --rail-radius: 18px;
+  --rail-shadow: 0 8px 28px #17315308;
+  --rail-font: 'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+  font-size: 16px;
+}

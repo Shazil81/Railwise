@@ -23,8 +23,8 @@ Nginx, Gunicorn and systemd deployment templates are also included. Public hosti
 </details>
 
 [![Regression checks](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml/badge.svg)](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml)
-[![Backend tests](https://img.shields.io/badge/Backend_tests-232_passed-16634b?style=flat-square)](docs/VALIDATION.md)
-[![Frontend tests](https://img.shields.io/badge/Frontend_tests-32_passed-16634b?style=flat-square)](docs/VALIDATION.md)
+[![Backend tests](https://img.shields.io/badge/Backend_tests-233_passed-16634b?style=flat-square)](docs/VALIDATION.md)
+[![Frontend tests](https://img.shields.io/badge/Frontend_tests-35_passed-16634b?style=flat-square)](docs/VALIDATION.md)
 [![Contention](https://img.shields.io/badge/100_attempts-1_winner-b9430a?style=flat-square)](docs/contention-results.json)
 
 **A railway booking portfolio project built around scarce inventory, payment uncertainty and recoverable workflows.**

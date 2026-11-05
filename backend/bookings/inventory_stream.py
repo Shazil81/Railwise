@@ -45,13 +45,18 @@ def inventory_snapshot(segments):
 
 
 def inventory_events(segments,lifetime=60,interval=3):
+    import hashlib
+    from django.core.cache import cache
+    key = 'inventory-snapshot:' + hashlib.sha256(json.dumps(sorted(segments)).encode()).hexdigest()
     previous=None
     deadline=time.monotonic()+lifetime
     try:
         yield 'retry: 2000\n\n'
         while time.monotonic()<deadline:
             close_old_connections()
-            rows=inventory_snapshot(segments)
+            # Share public counts between viewers; allocation still checks PostgreSQL.
+            # TTL is shorter than the stream interval to keep display lag brief.
+            rows=cache.get_or_set(key, lambda: inventory_snapshot(segments), timeout=min(2, interval))
             fingerprint=json.dumps(rows,sort_keys=True)
             if fingerprint!=previous:
                 payload=json.dumps({'journeys':rows,'observed_at':timezone.now().isoformat()})

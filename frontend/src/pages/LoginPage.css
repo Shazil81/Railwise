@@ -62,7 +62,7 @@
   z-index: 1;
   width: 100%;
   max-width: 420px;
-  background: white;
+  background:var(--rail-surface);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
@@ -84,7 +84,7 @@
   justify-content: center;
   background: var(--gradient-hero);
   border-radius: var(--radius-lg);
-  color: white;
+  color:var(--rail-surface);
   box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
 }
 .login-logo h1 {
@@ -94,10 +94,9 @@
   color: var(--text-primary);
 }
 .login-logo h1 span {
-  background: var(--gradient-hero);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  background: none;
+  color: var(--rail-brand-dark);
+  -webkit-text-fill-color: currentColor;
 }
 .login-subtitle {
   display: flex;
@@ -186,7 +185,7 @@
   width: 100%;
   padding: 14px;
   background: var(--gradient-hero);
-  color: white;
+  color:var(--rail-surface);
   font-size: 15px;
   font-weight: 600;
   border-radius: var(--radius-md);
@@ -229,7 +228,7 @@
   width: 20px;
   height: 20px;
   border: 2.5px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
+  border-top-color:var(--rail-surface);
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }

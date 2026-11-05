@@ -1,3 +1,4 @@
+import NotFoundPage from './pages/NotFoundPage';
 import { useEffect, useState } from 'react';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
@@ -33,9 +34,9 @@ export default function App() {
       {authenticated&&<AccountEmailBanner key={accountVersion} onVerify={()=>setAction({purpose:'verify'})}/>}
       <div hidden={location.pathname!=='/'}><DashboardPage authenticated={authenticated} onSignIn={()=>setSigningIn(true)} onSignOut={signOut}/></div>
       <Routes>
-        <Route path="/book/:journeyId" element={<BookingPage authenticated={authenticated} onSignIn={()=>setSigningIn(true)}/>}/>
-        <Route path="/booking/:bookingId" element={<BookingPage authenticated={authenticated} onSignIn={()=>setSigningIn(true)}/>}/>
-        <Route path="*" element={null}/>
+        <Route path="/book/:journeyId" element={<BookingPage key={location.pathname+location.search+':'+getStoredUser().username} authenticated={authenticated} onSignIn={()=>setSigningIn(true)}/>}/>
+        <Route path="/booking/:bookingId" element={<BookingPage key={location.pathname+location.search+':'+getStoredUser().username} authenticated={authenticated} onSignIn={()=>setSigningIn(true)}/>}/>
+        <Route path="/" element={null}/><Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </div>
     {action?<AuthDialog label="Account recovery" onClose={closeRecovery}><AccountRecovery key={`${action.purpose}-${action.token||'request'}`} action={action} onClose={closeRecovery}/></AuthDialog>:signingIn&&<AuthDialog label="Railwise account" onClose={()=>setSigningIn(false)}><LoginPage onRecovery={purpose=>setAction({purpose})} onLogin={()=>{setAuthenticated(true);setSigningIn(false);setAuthError('');setAccountVersion(v=>v+1);}} onGuest={()=>setSigningIn(false)}/></AuthDialog>}

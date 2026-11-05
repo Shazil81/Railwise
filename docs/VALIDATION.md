@@ -10,12 +10,12 @@ They are not HTTP load measurements or production capacity claims.
 
 ## Checks on this checkout
 
-- Frontend: 32 tests passed; lint passed; production build passed.
+- Frontend: 35 tests passed; lint passed; production build passed.
 - Windows: six startup regression checks passed; installed shortcut matches this project.
 - Running supervisor heartbeat: operations mode; worker and beat running.
 - Startup launcher smoke test: reached READY after fixing child script path quoting.
 - Production settings: Django `check --deploy` passed with synthetic HTTPS/domain/secret inputs.
-- Backend full regression: all 232 tests passed in 262.518 seconds using isolated test settings and PostgreSQL.
+- Backend full regression: all 233 tests passed in 113.830 seconds using isolated test settings and PostgreSQL.
 
 The test settings isolate email/cache/Celery broker and use a fast test-only hasher.
 Inventory/constraints still use PostgreSQL. Never serve using test_settings.
@@ -35,3 +35,25 @@ were re-tested during this documentation/release run.
 - Scheduled encrypted backup and restore rehearsal into a separate DB.
 - Fresh phone-browser smoke check and a sanitized video recording.
 - CI status on GitHub after this push; local passing tests do not imply CI has run.
+
+## Focused usability and lifecycle improvements — 5 November 2026
+
+- The current regression run passed all 233 backend tests and 35 frontend tests.
+- Public browsing no longer loads Razorpay; the payment action loads the SDK once,
+  with timeout/error cleanup and retry. A browser smoke check opened Test Mode
+  checkout using the lazy loader. It made no payment; the unpaid hold was cancelled.
+- Passenger drafts are copied into tab memory, isolated by username/route and available
+  for 30 minutes. They clear on successful reservation, logout or password reset.
+  Reload/close warns while dirty; drafts never enter localStorage/sessionStorage.
+- Browser check: returning to results and reopening the same train restored passengers.
+- Results subscribe to inventory only while their route and browser tab are active;
+  booking polling also pauses in background tabs. Public SSE snapshots are briefly
+  shared through the configured Django cache (2 seconds, below the 3-second tick).
+  Server allocation remains authoritative; the cache never reserves seats.
+- Mobile filters expand/collapse; small text is at least 12px; shared tokens/fonts
+  are centralized. Browser inspection at 375px found no horizontal overflow.
+- Missing routes display a 404 screen with Home recovery.
+
+Physical touch/screen-reader testing and production capacity remain unverified.
+No deployment was performed. Earlier successful gateway capture/PDF/refund evidence
+remains the separate dated integration check above.

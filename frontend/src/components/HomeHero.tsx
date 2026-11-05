@@ -1,10 +1,9 @@
-import { ArrowRight, MapPin, Search, ShieldCheck, Ticket, TrainFront } from 'lucide-react';
+import { ArrowRight, MapPin, Search, ShieldCheck, Ticket } from 'lucide-react';
 
 export default function HomeHero({onSearch}:{onSearch:()=>void}) {
   return <section className="home-hero" aria-labelledby="home-title">
     <div className="home-hero-copy">
-      <span className="home-kicker"><TrainFront size={17}/> LET’S GET YOU THERE</span>
-      <h1 id="home-title">Your next journey,<br/><em>made easy.</em></h1>
+      <h1 id="home-title">Your next journey starts here.</h1>
       <p>Compare trains. Find your next stop.</p>
       <div className="home-hero-actions"><button type="button" className="hero-search-cta" onClick={onSearch}>Find trains <ArrowRight size={18}/></button><span className="home-guest-note"><ShieldCheck size={16}/>Search freely. Sign in to book.</span></div>
     </div>

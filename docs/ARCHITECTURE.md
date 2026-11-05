@@ -52,3 +52,12 @@ Redis throttling cache. No browser receives backend provider secrets.
 
 See DEPLOYMENT.md for service templates and backup/monitoring steps, and
 VALIDATION.md for measured checks and remaining real-environment verification.
+
+## Frontend lifecycle
+
+The dashboard stays mounted to retain searches, but background subscriptions are
+gated by both the active route and document visibility. Payment SDK download is
+on demand and retryable. Draft passenger details stay in tab memory, with a bounded
+read lifetime and explicit clearing on logout/reset/success; they are not persisted
+to browser storage. A brief public inventory cache shares SSE work across viewers;
+PostgreSQL still validates every hold regardless of the displayed count.

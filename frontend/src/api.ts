@@ -1,3 +1,4 @@
+import {clearPassengerDrafts} from './passengerDraft.ts';
 import axios from 'axios';
 import { authSession } from './authSession.ts';
 
@@ -38,7 +39,7 @@ export async function requestAccountLink(purpose: 'verify' | 'reset', username: 
 }
 export async function consumeAccountLink(purpose: 'verify' | 'reset', token: string, password: string, password_confirm: string) {
   const { data } = await api.post(purpose === 'verify' ? '/accounts/verify-email/' : '/accounts/reset-password/', { token, password, password_confirm });
-  if (purpose === 'reset') authSession.clear();
+  if (purpose === 'reset') { authSession.clear(); clearPassengerDrafts(); }
   return data.detail as string;
 }
 export async function getAccountStatus(): Promise<{username: string; email: string; email_verified: boolean}> {
@@ -51,6 +52,7 @@ export async function logout() {
     if (!axios.isAxiosError(error) || error.response?.status !== 401) throw error;
   }
   authSession.clear();
+  clearPassengerDrafts();
 }
 
 export function getStoredUser() {
