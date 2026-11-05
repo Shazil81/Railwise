@@ -1,28 +1,72 @@
 # Railwise
 
+![Railwise — thoughtful journeys, reliable bookings](docs/assets/railwise-banner.svg)
+
 [![Regression checks](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml/badge.svg)](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml)
+[![Backend tests](https://img.shields.io/badge/Backend_tests-232_passed-16634b?style=flat-square)](docs/VALIDATION.md)
+[![Frontend tests](https://img.shields.io/badge/Frontend_tests-32_passed-16634b?style=flat-square)](docs/VALIDATION.md)
+[![Contention](https://img.shields.io/badge/100_attempts-1_winner-b9430a?style=flat-square)](docs/contention-results.json)
 
 **A railway booking portfolio project built around scarce inventory, payment uncertainty and recoverable workflows.**
 
-React + TypeScript · Django REST Framework · PostgreSQL · Redis/Celery · Razorpay Test Mode
+**Explore:** [Problems solved](#problems-solved) · [Tech stack](#tech-stack) · [Architecture](#architecture) · [Local setup](#run-locally) · [Test evidence](#tests-and-evidence)
 
 Railwise lets guests discover saved Indian train routes, compare class fares and then sign in to book. The backend owns the demo inventory: it allocates berths, holds them during checkout, verifies payment evidence and reconciles cancellations/refunds asynchronously.
 
 > Independent portfolio demo. Timetables are saved snapshots; fares and seat inventory are simulated. Tickets are not valid for travel. No runtime railway API is required.
 
-## Why this project
+## Problems solved
 
-| Problem | Implementation |
-| --- | --- |
-| Two users request overlapping use of one seat | Journey row locking inside PostgreSQL transactions, backed by a GiST exclusion constraint |
-| A seat can serve different passengers on adjacent route legs | Half-open route segments `[from_seq, to_seq)` |
-| Checkout is abandoned | Ten-minute holds with deadline-aware expiry and reconciliation |
-| Payment succeeds but the browser callback is lost | Signed webhooks and periodic provider reconciliation |
-| Payment arrives after cancellation/expiry | Durable refund record and idempotent provider requests |
-| A group cannot fit | Atomic allocation: all requested passenger seats or no partial reservation |
-| A route uses multiple city terminals | Offline terminal groups, with actual boarding/arrival confirmation |
+> **Core result:** 100 competing requests for one seat produced **1 successful hold and 99 rejected conflicts** in the local PostgreSQL contention benchmark. [See the measured results and scope](docs/VALIDATION.md).
+
+### Reliable inventory under contention
+
+**Prevent overlapping reservations.** Journey-level transaction locks and a PostgreSQL exclusion constraint protect the same seat even when competing requests arrive together. Multi-passenger bookings allocate atomically, while adjacent route legs can reuse capacity.
+
+### Recoverable checkout and payments
+
+**An abandoned browser must not strand inventory or decide payment truth.** Holds expire after ten minutes; server verification, signed webhooks and periodic reconciliation recover missing callbacks. Late captures queue refunds rather than restoring an expired reservation.
+
+### Clear cancellation and refund tracking
+
+**A cancellation click is only the beginning of a refund.** Durable requests, idempotent provider calls and background reconciliation track Requested → Processing → Processed. The interface distinguishes provider processing from independently verified bank credit.
+
+| Challenge | Solution in Railwise | User benefit |
+| --- | --- | --- |
+| **Double booking** | Journey locks + PostgreSQL GiST exclusion constraint | One active reservation per overlapping seat segment |
+| **Unused capacity between stops** | Half-open route intervals `[from_seq, to_seq)` | Adjacent legs can reuse the same seat |
+| **Abandoned checkout** | Deadline-aware holds and expiry reconciliation | Inventory becomes available again |
+| **Lost payment callback** | Verified webhooks + periodic provider checks | Recoverable payment status |
+| **Late payment after cancellation** | Durable refund queue + idempotent requests | Refund processing can resume after interruptions |
+| **Partial group reservation** | Atomic passenger allocation | All requested seats or no partial reservation |
+| **Different city terminals** | Offline terminal groups + booking confirmation | Actual boarding/arrival stations stay explicit |
 
 The project demonstrates these engineering problems; it does not claim they are unhandled defects in the real IRCTC system.
+
+## Tech stack
+
+![React](https://img.shields.io/badge/React-142d52?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![Celery](https://img.shields.io/badge/Celery-37814A?style=for-the-badge&logo=celery&logoColor=white)
+![Razorpay Test Mode](https://img.shields.io/badge/Razorpay-Test_Mode-0C2451?style=for-the-badge&logo=razorpay&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
+
+| Layer | Technologies | Responsibility |
+| --- | --- | --- |
+| **Frontend** | React, TypeScript, Vite, React Router, Lucide | Responsive search, passenger forms, checkout and booking management |
+| **API** | Python, Django, Django REST Framework | Validation, ownership, fare calculation and reservation workflows |
+| **Database** | PostgreSQL | Transactional inventory, segment constraints and durable records |
+| **Background jobs** | Celery worker, Celery Beat, Redis | Scheduled hold expiry, payment/refund reconciliation and email delivery |
+| **Payments & tickets** | Razorpay Test Mode, ReportLab | Verified test transactions and server-generated PDF tickets |
+| **Development & CI** | Docker Compose, GitHub Actions | Local dependencies and automated regression checks |
+
+**Deployment preparation:** Nginx, Gunicorn and systemd templates are included. Public hosting has not been deployed.
 
 ## User experience
 

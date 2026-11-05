@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">Railwise — thoughtful journeys, reliable bookings</title>
+  <desc id="desc">A navy and orange railway booking project banner highlighting transactional inventory and recoverable payments.</desc>
+  <rect width="1200" height="320" rx="24" fill="#142d52"/>
+  <circle cx="1100" cy="52" r="140" fill="#1e3a66"/>
+  <circle cx="1130" cy="45" r="36" fill="#ffc184"/>
+  <g fill="none" stroke="#718aab" stroke-width="3" opacity=".45">
+    <path d="M760 270h410M790 286h380"/>
+    <path d="m800 266-10 24m55-24-10 24m55-24-10 24m55-24-10 24m55-24-10 24m55-24-10 24m55-24-10 24m55-24-10 24"/>
+  </g>
+  <g transform="translate(860 110)">
+    <path d="M0 55V30Q0 0 30 0h135q47 0 75 40l25 40H0Z" fill="#f5f7fb"/>
+    <path d="M15 68h235l8 12H15Z" fill="#ffc184"/>
+    <rect x="18" y="18" width="32" height="30" rx="5" fill="#34577c"/>
+    <rect x="62" y="18" width="32" height="30" rx="5" fill="#34577c"/>
+    <rect x="106" y="18" width="32" height="30" rx="5" fill="#34577c"/>
+    <path d="M155 18h15q27 0 48 30h-63Z" fill="#34577c"/>
+    <circle cx="46" cy="85" r="12" fill="#91a7c3"/><circle cx="210" cy="85" r="12" fill="#91a7c3"/>
+  </g>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <text x="55" y="65" fill="#bed0e7" font-size="15" letter-spacing="3">RAILWAY BOOKING · ENGINEERING PORTFOLIO</text>
+    <text x="52" y="143" fill="#fff" font-size="68" font-weight="700">Railwise</text>
+    <text x="55" y="188" fill="#ffc184" font-size="24">Thoughtful journeys. Reliable bookings.</text>
+    <text x="55" y="227" fill="#dce5f2" font-size="18">Transactional inventory · Verified payments · Durable recovery</text>
+    <rect x="55" y="252" width="332" height="36" rx="18" fill="#244367"/>
+    <text x="74" y="276" fill="#e8eff9" font-size="14">React + Django + PostgreSQL + Celery</text>
+  </g>
+</svg>
