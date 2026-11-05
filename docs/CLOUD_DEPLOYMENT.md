@@ -1,7 +1,8 @@
 # Vercel + Render + Neon + Upstash
 
 Deployment is not complete until the public URLs and payment flow are verified.
-Use a new Neon database; do not upload local users, bookings or database dumps.
+Use a dedicated Neon database and keep backup dumps private. The initial deployment
+used only seed data; the owner later explicitly authorized importing local data.
 
 ## Hosted resources — 5 November 2026
 
@@ -11,7 +12,8 @@ Use a new Neon database; do not upload local users, bookings or database dumps.
 - Redis: existing authorized Upstash free instance, with `railwise-production`
   cache prefix and `railwise:` broker/result prefix for any future Celery processes.
   Existing applications' keys are not changed or flushed.
-- No local user data/database dump was imported; only the bundled catalogue was seeded.
+- Initially only the bundled catalogue was seeded. The later authorized local-data
+  import and PC-hosted background jobs are recorded in [Docker worker setup](DOCKER_WORKER.md).
 - A new synthetic account verified signup/login, two-passenger holds, fare review,
   creation of a real Razorpay **test order**, unpaid PDF denial, cancellation and logout.
   No test payment was captured in this deployment smoke check.
@@ -24,13 +26,15 @@ Use a new Neon database; do not upload local users, bookings or database dumps.
 
 - Render Free API sleeps after inactivity and shares monthly free compute hours
   with other services in the workspace. Expect a cold start.
-- No always-on Celery worker/beat is provisioned by this free blueprint.
+- No always-on Celery worker/beat is provisioned by this free blueprint on Render.
+  The owner's PC now supplies the [Docker worker/beat](DOCKER_WORKER.md).
   Scheduled email dispatch, hold sweeps and payment/refund recovery need an
   independently running worker/beat before claiming background automation.
   Webhook delivery and explicit payment-status checks are separate mechanisms.
-- Render Free blocks SMTP ports 25/465/587. Gmail SMTP will not deliver there.
-  Add an HTTPS email provider integration before promising verification,
-  password-reset or booking emails. Do not use console logs as inbox delivery.
+- Render Free blocks SMTP ports 25/465/587. Account and booking emails are instead
+  queued in Neon and sent by the owner's Docker worker over Gmail SMTP. Configure
+  matching `SECRET_KEY` values on API/worker for account-token encryption. Keep the
+  PC awake; console logs and SMTP acceptance alone do not prove inbox delivery.
 - Upstash's request allowance can be consumed by SSE and Celery polling. Use
   dedicated databases, monitor usage, and do not enable paid overages.
 

@@ -1,12 +1,13 @@
 # Email verification and password recovery
 
-Signup sends a verification email after the account transaction commits. Existing users can request verification from the account banner or sign-in dialog. Email links open a dedicated Railwise screen; verification requires pressing **Verify email**, so simply opening a link does not consume it. The banner shows the verified state for the user's current account email. Booking checkout remains available while unverified; password recovery requires verification.
+Signup atomically queues a verification email with the account/link transaction. The Docker Celery worker sends it using Gmail SMTP, independently of Render's blocked SMTP ports. Existing users can request verification from the account banner or sign-in dialog. Email links open a dedicated Railwise screen; verification requires pressing **Verify email**, so simply opening a link does not consume it. Booking checkout remains available while unverified; password recovery requires verification.
 
-**Forgot password?** asks for the username and verified account email. Both must match, avoiding ambiguous resets where legacy accounts share an address. Unknown, inactive, unverified and mismatched accounts receive the same generic 202 response. The response does not promise delivery or reveal a token. Email delivery is synchronous, so this is not a constant-time anti-enumeration guarantee. Delivery exceptions are redacted and receive the same generic response; retry through resend after checking SMTP health. There is no durable email retry outbox in this phase.
+**Forgot password?** asks for the username and verified account email. Both must match, avoiding ambiguous resets where legacy accounts share an address. Unknown, inactive, unverified and mismatched accounts receive the same generic 202 response. The response never reveals a token. Requests do not contact SMTP and are not claimed to be constant-time; eligible requests create durable outbox rows. Worker failures retry with bounded backoff (up to five attempts), without logging provider exception details.
 
 ## Link security
 
-- Cryptographically random 256-bit tokens; only their SHA-256 digest is stored.
+- Cryptographically random 256-bit tokens; validation stores their SHA-256 digest. The outbox temporarily stores a Fernet-encrypted token, with a purpose-separated key derived from `SECRET_KEY`. No plaintext link/token is stored in its payload.
+- API and worker must share `SECRET_KEY`. A key change makes pending payloads fail closed; request a fresh link after rotation. Payloads are erased after SMTP acceptance, supersession, consumption, expiry or terminal failure.
 - Separate verification/reset purposes; links expire after 30 minutes by default.
 - Resending invalidates previous unused links of that purpose.
 - Atomic user/link row locks enforce single use, including concurrent reset attempts.
@@ -21,7 +22,9 @@ Verified account email is distinct from a booking's contact email. This phase do
 
 Apply migrations: `python backend/manage.py migrate`.
 
-The default DEBUG email backend prints emails to the API terminal; it does not send mail to an inbox. Open the generated verification/reset link yourself to exercise the flow. Treat terminal email links as credentials and do not share logs containing them. Automated tests use Django's in-memory email backend and never send real mail.
+Run the worker/beat for the database used by the API. The deployed setup uses [the PC-hosted Docker worker](DOCKER_WORKER.md), which scans the account outbox every 30 seconds before booking notifications. If the PC is off/asleep, messages wait; expired links are skipped and must be requested again. The API does not enqueue through a remote Redis broker: both ends share durable Neon records.
+
+The default DEBUG console email backend prints mail from the **worker**, not the API, and never delivers to an inbox. Treat those links as credentials. Automated tests use an in-memory backend and never send real mail.
 
 ## SMTP setup
 
@@ -39,7 +42,7 @@ EMAIL_HOST_PASSWORD=your-provider-secret
 EMAIL_USE_TLS=True
 ```
 
-Use a provider-approved sender, HTTPS frontend and authenticated SMTP. The provider credentials and actual delivery have not been configured or verified. `EMAIL_TIMEOUT` is 10 seconds. DEBUG=False defaults to SMTP instead of console. See [Django email configuration](https://docs.djangoproject.com/en/6.0/topics/email/) and [password validation](https://docs.djangoproject.com/en/6.0/topics/auth/passwords/).
+Set SMTP credentials on the Docker worker only; do not put Gmail credentials on Vercel or commit them. Use the configured Gmail sender and app password, an HTTPS frontend, and matching API/worker `SECRET_KEY`. `EMAIL_TIMEOUT` is 10 seconds. SMTP acceptance is recorded as `SENT`; inbox/spam delivery is verified separately. A process crash after SMTP acceptance but before the DB commit can cause a duplicate email with the same single-use link; this is not an exactly-once delivery guarantee.
 
 ## API
 

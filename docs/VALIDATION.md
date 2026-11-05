@@ -12,16 +12,31 @@ They are not HTTP load measurements or production capacity claims.
 
 - Frontend: 36 tests passed; lint passed; production build passed.
 - Windows: six startup regression checks passed; installed shortcut matches this project.
-- Running supervisor heartbeat: operations mode; worker and beat running.
+- Docker worker and single beat: running with private Redis and the migrated Neon database.
 - Startup launcher smoke test: reached READY after fixing child script path quoting.
 - Production settings: Django `check --deploy` passed with synthetic HTTPS/domain/secret inputs.
-- Backend full regression: all 238 tests passed in 169.929 seconds using isolated test settings and PostgreSQL.
+- Backend full regression: all 247 tests passed in 120.425 seconds using isolated test settings and PostgreSQL.
 - Cloud settings: TLS-only Redis, required PostgreSQL URL, pooled-connection cursor safety,
   explicit CORS origin and production `check --deploy` passed with synthetic inputs.
 - Public health endpoint returns a safe 503 on database failure without leaking connection details.
 
 The test settings isolate email/cache/Celery broker and use a fast test-only hasher.
 Inventory/constraints still use PostgreSQL. Never serve using test_settings.
+
+## Docker and Neon cutover — 5 November 2026
+
+The later Docker/Neon cutover verified 24 matching table counts, 4 imported accounts,
+12 booking rows and the seat exclusion constraint. Public API cutover was checked
+using a temporary synthetic account, then only that account was removed. Docker
+scheduled tasks completed successfully; container SMTP authentication passed without
+sending a test email. The existing Windows sign-in launcher reached READY in Docker
+mode. Physical reboot/sign-in and real inbox delivery were not repeated.
+
+## Account-email outbox — 5 November 2026
+
+Account-email outbox coverage additionally verifies no inline SMTP on the request
+path, encrypted token persistence, payload erasure, stale/changed-identity skipping,
+bounded retry/redacted errors, atomic rollback and two competing mail dispatchers.
 
 ## Earlier browser evidence — 1 November 2026
 

@@ -1,0 +1,57 @@
+name: railwise-cloud-worker
+
+x-worker: &worker
+  image: railwise-worker:local
+  build:
+    context: ./backend
+  env_file:
+    - path: ./.runtime/cloud-worker/worker.env
+      format: raw
+  environment:
+    DJANGO_SETTINGS_MODULE: railway_core.docker_worker
+    RAILWISE_BACKGROUND_MODE: operations
+  restart: unless-stopped
+  init: true
+  read_only: true
+  tmpfs:
+    - /tmp
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '3'
+
+services:
+  worker:
+    <<: *worker
+    command: celery -A railway_core worker --loglevel=INFO --concurrency=1 --without-gossip --without-mingle --without-heartbeat -Q celery,railwise_notifications
+    depends_on:
+      redis:
+        condition: service_healthy
+  beat:
+    <<: *worker
+    command: celery -A railway_core beat --loglevel=INFO --schedule=/app/state/celerybeat-schedule --pidfile=
+    volumes:
+      - beat_state:/app/state
+    depends_on:
+      redis:
+        condition: service_healthy
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    volumes:
+      - worker_redis:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  beat_state:
+  worker_redis:

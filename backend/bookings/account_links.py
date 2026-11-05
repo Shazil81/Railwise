@@ -1,14 +1,11 @@
 """Single-use hashed email links. No bearer link is returned in an API response."""
 import hashlib
-import logging
 import secrets
 from datetime import timedelta
-from urllib.parse import urlencode
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
-from django.core.mail import send_mail
 from django.db import transaction
 from django.utils import timezone
 from rest_framework import serializers
@@ -17,9 +14,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .accounts import LoginThrottle
-from .models import AccountEmail, AccountLink
+from .models import AccountEmail, AccountLink, AccountLinkDelivery
 
-logger = logging.getLogger(__name__)
 GENERIC = 'If the account is eligible, an email will arrive shortly. Check spam or request another link if needed.'
 
 
@@ -51,21 +47,13 @@ def issue_link(user, purpose):
         if (purpose == 'reset' and (not verified or not user.has_usable_password())) or (purpose == 'verify' and verified):
             return
         AccountLink.objects.filter(user=user, purpose=purpose, used_at__isnull=True).update(used_at=timezone.now())
-        AccountLink.objects.create(user=user, purpose=purpose, email=user.email,
+        AccountLinkDelivery.objects.filter(link__user=user,link__purpose=purpose,state__in=['QUEUED','RETRY']).update(state='SKIPPED',token_ciphertext='')
+        link=AccountLink.objects.create(user=user, purpose=purpose, email=user.email,
             password_digest=hashlib.sha256(user.password.encode()).hexdigest(),
             digest=hashlib.sha256(raw.encode()).hexdigest(),
             expires_at=timezone.now()+timedelta(seconds=settings.ACCOUNT_LINK_TIMEOUT))
-        email = user.email
-    url = settings.FRONTEND_URL.rstrip('/') + '/#' + urlencode({'account_action': purpose, 'token': raw})
-    label = 'Verify your email' if purpose == 'verify' else 'Reset your password'
-    try:
-        send_mail('Railwise - '+label,
-            f'{label} for your Railwise account:\n\n{url}\n\nThis link expires in {settings.ACCOUNT_LINK_TIMEOUT // 60} minutes and works once. '
-            'Only continue if you requested this. Otherwise ignore this email.\nRailwise is a portfolio demo.',
-            settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
-    except Exception:
-        # Provider exceptions may contain recipient addresses or credentials. Never log them.
-        logger.warning('Account email delivery failed; user may request another link.')
+        from .account_mail import token_cipher
+        AccountLinkDelivery.objects.create(link=link,token_ciphertext=token_cipher().encrypt(raw.encode()).decode())
 
 
 class RequestLinkView(APIView):
@@ -136,6 +124,7 @@ class ConsumeLinkView(APIView):
                 BookingEmail.objects.filter(booking__user=user, state='WAITING_VERIFICATION').update(state='QUEUED', next_attempt_at=timezone.now())
             link.used_at = timezone.now()
             link.save(update_fields=['used_at'])
+            AccountLinkDelivery.objects.filter(link__user=user,link__used_at__isnull=False).exclude(state='SENT').update(state='SKIPPED',token_ciphertext='')
         return private({'detail': 'Email verified. You can sign in.' if self.purpose == 'verify' else 'Password reset. Sign in with your new password.'})
 
 

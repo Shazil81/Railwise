@@ -5,8 +5,9 @@
 **[Open the live demo](https://railwise-phi.vercel.app/)** · [API health](https://railwise-api.onrender.com/api/health/)
 
 Hosted on Vercel + Render Free, with Neon PostgreSQL and Upstash Redis. The API can
-take about a minute to wake up. This free deployment has no always-on Celery
-worker/beat or inbox email delivery; background automation requires separate setup.
+take about a minute to wake up. Background jobs run in Docker on the owner's PC
+and pause when it is off/asleep. Signup, verification and reset emails use an
+encrypted database outbox and the PC worker's Gmail SMTP. See [Docker worker setup](docs/DOCKER_WORKER.md).
 
 ## Tech stack
 
@@ -29,7 +30,7 @@ Gunicorn serves the Render API. Nginx/systemd templates are also included for a 
 </details>
 
 [![Regression checks](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml/badge.svg)](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml)
-[![Backend tests](https://img.shields.io/badge/Backend_tests-238_passed-16634b?style=flat-square)](docs/VALIDATION.md)
+[![Backend tests](https://img.shields.io/badge/Backend_tests-247_passed-16634b?style=flat-square)](docs/VALIDATION.md)
 [![Frontend tests](https://img.shields.io/badge/Frontend_tests-36_passed-16634b?style=flat-square)](docs/VALIDATION.md)
 [![Contention](https://img.shields.io/badge/100_attempts-1_winner-b9430a?style=flat-square)](docs/contention-results.json)
 
@@ -193,6 +194,7 @@ Use fictional data in public screenshots/video. Only the four reviewed demo capt
 - [Operations dashboard](docs/OPERATIONS.md) · [email delivery](docs/BOOKING_EMAILS.md)
 - [Deployment, TLS, backups and monitoring](docs/DEPLOYMENT.md)
 - [Vercel / Render / Neon / Upstash setup and free-tier limitations](docs/CLOUD_DEPLOYMENT.md)
+- [PC-hosted Docker worker and local-to-Neon migration](docs/DOCKER_WORKER.md)
 - [Demo recording script and resume wording](docs/PORTFOLIO.md)
 
 ## Scope

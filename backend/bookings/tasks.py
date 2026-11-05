@@ -7,9 +7,10 @@ from .services import expire_journey
 @shared_task
 def send_booking_notifications():
     from .notifications import dispatch_booking_emails
+    from .account_mail import dispatch_account_emails
     # The notification-only Windows worker also maintains local holds; no gateway calls.
     sweep_expired_holds()
-    return dispatch_booking_emails()
+    return {'account':dispatch_account_emails(), 'booking':dispatch_booking_emails()}
 
 @shared_task
 def expire_unpaid_booking(booking_id):

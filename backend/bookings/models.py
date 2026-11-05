@@ -213,6 +213,21 @@ class AccountLink(models.Model):
     used_at = models.DateTimeField(null=True, blank=True)
 
 
+class AccountLinkDelivery(models.Model):
+    link = models.OneToOneField(AccountLink, on_delete=models.CASCADE, related_name='delivery')
+    token_ciphertext = models.TextField()
+    state = models.CharField(max_length=10, default='QUEUED', choices=[
+        ('QUEUED','Queued'),('RETRY','Retry scheduled'),('SENT','SMTP accepted'),
+        ('FAILED','Needs attention'),('SKIPPED','Link no longer valid')])
+    attempts = models.PositiveIntegerField(default=0)
+    next_attempt_at = models.DateTimeField(default=timezone.now)
+    sent_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [models.Index(fields=['state','next_attempt_at'], name='account_mail_due_idx')]
+
+
 class BookingEmail(models.Model):
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE, related_name='email_notifications')
     event_key = models.CharField(max_length=150, unique=True)

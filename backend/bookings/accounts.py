@@ -71,7 +71,7 @@ class SignupView(APIView):
                 user = get_user_model().objects.create_user(**values)
                 token = Token.objects.create(user=user)
                 from .account_links import issue_link
-                transaction.on_commit(lambda: issue_link(user, 'verify'))
+                issue_link(user, 'verify')
         except IntegrityError:
             raise serializers.ValidationError({'username': 'This username is unavailable.'})
         response = Response({'token': token.key, 'username': user.username}, status=201)

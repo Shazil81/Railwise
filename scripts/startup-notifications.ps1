@@ -39,6 +39,13 @@ try {
         exit 0
     }
     Write-StartupLog 'Starting Railwise email dependencies after Windows sign-in.'
+    if (Test-Path -LiteralPath (Join-Path $projectRoot '.runtime/cloud-worker/enabled')) {
+        $stage='docker-cloud-worker'; Write-BootStatus 'STARTING'
+        & (Join-Path $PSScriptRoot 'cloud-worker.ps1') -Action start
+        $stage='ready'; Write-BootStatus 'READY'
+        Write-StartupLog 'Docker worker/beat started for the deployed Neon database.'
+        exit 0
+    }
     $configPath = Join-Path $runtime 'config.json'
     if (-not (Test-Path -LiteralPath $configPath)) { throw 'Run notification setup once to save the interpreter/database configuration.' }
     $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json

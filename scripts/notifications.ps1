@@ -8,6 +8,10 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
+if (Test-Path -LiteralPath (Join-Path $projectRoot '.runtime/cloud-worker/enabled')) {
+    & (Join-Path $PSScriptRoot 'cloud-worker.ps1') -Action $Action
+    exit 0
+}
 $runtime = Join-Path $projectRoot '.runtime/notification-services'
 $statusPath = Join-Path $runtime 'status.json'
 $configPath = Join-Path $runtime 'config.json'

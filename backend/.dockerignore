@@ -1,0 +1,12 @@
+**
+!Dockerfile
+!requirements.txt
+!requirements-production.txt
+!manage.py
+!railway_core/
+!railway_core/**
+!bookings/
+!bookings/**
+**/__pycache__/
+**/*.pyc
+**/.env*

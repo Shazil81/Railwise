@@ -9,6 +9,7 @@ from django.utils import timezone
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 from .models import AccountEmail, AccountLink
+from .account_mail import dispatch_account_emails
 
 
 @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend', FRONTEND_URL='https://railwise.example', ACCOUNT_LINK_TIMEOUT=1800)
@@ -28,6 +29,7 @@ class AccountLinkTests(TestCase):
         self.assertEqual(response.status_code, 202)
         self.assertEqual(response['Cache-Control'], 'no-store')
         self.assertNotIn('token', response.data)
+        dispatch_account_emails()
         url = next(line for line in mail.outbox[-1].body.splitlines() if line.startswith('https://'))
         self.assertTrue(url.startswith('https://railwise.example/#'))
         return parse_qs(urlsplit(url).fragment)['token'][0]
@@ -124,9 +126,10 @@ class AccountLinkTests(TestCase):
         self.assertEqual(self.client.post('/api/accounts/request-verification/',self.identity).status_code,429)
 
     def test_provider_failure_does_not_leak_or_rollback_signup(self):
-        with patch('bookings.account_links.send_mail',side_effect=RuntimeError('sensitive provider details')):
-            with self.assertLogs('bookings.account_links',level='WARNING') as log:
+        with patch('bookings.account_mail.send_mail',side_effect=RuntimeError('sensitive provider details')):
+            with self.assertLogs('bookings.account_mail',level='WARNING') as log:
                 response=self.client.post('/api/accounts/request-verification/',self.identity)
+                dispatch_account_emails()
         self.assertEqual(response.status_code,202)
         self.assertNotIn('sensitive',str(log.output))
         self.assertNotIn(self.user.email,str(log.output))
@@ -136,6 +139,7 @@ class AccountLinkTests(TestCase):
             response=self.client.post('/api/accounts/signup/',{'username':'newtraveller','email':'new@example.com',
                 'password':'Violet!Journey492','password_confirm':'Violet!Journey492'})
         self.assertEqual(response.status_code,201)
+        dispatch_account_emails()
         self.assertEqual(mail.outbox[-1].to,['new@example.com'])
         self.assertIn('Verify your email',mail.outbox[-1].subject)
 
