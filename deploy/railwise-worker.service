@@ -1,0 +1,15 @@
+[Unit]
+Description=Railwise payment recovery and email worker
+After=network-online.target
+[Service]
+User=railwise
+WorkingDirectory=/srv/railwise/backend
+EnvironmentFile=/etc/railwise.env
+Environment=DJANGO_SETTINGS_MODULE=railway_core.production
+ExecStart=/srv/railwise/backend/venv/bin/celery -A railway_core worker --loglevel=INFO --concurrency=2 -Q celery,railwise_notifications
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

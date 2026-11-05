@@ -1,0 +1,54 @@
+{
+  "reviewed_on": "2026-10-22",
+  "scope": "Exact-station services in the saved source listing: regular services plus date-bounded specials; not a live feed",
+  "reference": "https://etrain.info/trains/Patna-Jn-PNBE-to-Howrah-Jn-HWH",
+  "corridors": [
+    {
+      "from": "PNBE",
+      "to": "HWH",
+      "train_numbers": [
+        "12024",
+        "12274",
+        "12304",
+        "12306",
+        "13006",
+        "13036",
+        "13038",
+        "13042",
+        "13048",
+        "22348"
+      ],
+      "source_train_numbers_including_specials": [
+        "02024",
+        "04052",
+        "12024",
+        "12274",
+        "12304",
+        "12306",
+        "13006",
+        "13036",
+        "13038",
+        "13042",
+        "13048",
+        "22348"
+      ]
+    }
+  ],
+  "included_limited_date_services": [
+    {
+      "train_number": "02024",
+      "valid_from": "2026-03-08",
+      "valid_until": "2026-12-13"
+    },
+    {
+      "train_number": "04052",
+      "valid_from": "2026-10-02",
+      "valid_until": "2026-11-29"
+    }
+  ],
+  "terminal_notes": [
+    "RJPB, PPTA and HJP are separate boarding stations; never silently substitute them for PNBE.",
+    "HWH, KOAA, SDAH, SHM and SRC are separate destination terminals.",
+    "Running days are the train origin days; day-2 boarding is shifted by the route day offset."
+  ]
+}

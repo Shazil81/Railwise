@@ -1,0 +1,16 @@
+[Unit]
+Description=Railwise single periodic scheduler
+After=network-online.target
+[Service]
+User=railwise
+WorkingDirectory=/srv/railwise/backend
+EnvironmentFile=/etc/railwise.env
+Environment=DJANGO_SETTINGS_MODULE=railway_core.production
+StateDirectory=railwise
+ExecStart=/srv/railwise/backend/venv/bin/celery -A railway_core beat --loglevel=INFO --schedule=/var/lib/railwise/beat --pidfile=
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

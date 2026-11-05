@@ -1,0 +1,15 @@
+[Unit]
+Description=Railwise Django API
+After=network-online.target
+[Service]
+User=railwise
+WorkingDirectory=/srv/railwise/backend
+EnvironmentFile=/etc/railwise.env
+Environment=DJANGO_SETTINGS_MODULE=railway_core.production
+ExecStart=/srv/railwise/backend/venv/bin/gunicorn railway_core.wsgi:application --bind 127.0.0.1:8000 --workers 2 --worker-class gthread --threads 8 --timeout 120 --access-logfile -
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+{
+  "attempts": 100,
+  "threads": 10,
+  "winners": 1,
+  "conflicts": 99,
+  "elapsed_seconds": 6.854,
+  "attempts_per_second": 14.59,
+  "p50_ms": 663.47,
+  "p95_ms": 762.7,
+  "scope": "Local service calls with DB connections; not HTTP throughput"
+}

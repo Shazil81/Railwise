@@ -1,0 +1,227 @@
+/* Railwise design system: ui-ux-pro-max travel/Swiss direction, project overrides. */
+:root{
+ --rail-ink:#172b46;--rail-muted:#526179;--rail-brand:#1e3a8a;--rail-brand-dark:#142d52;
+ --rail-accent:#b9430a;--rail-accent-hover:#923207;--rail-bg:#f4f6fa;--rail-surface:#ffffff;
+ --rail-line:#d8e1ed;--rail-soft:#edf2f9;--rail-warm:#fff4e8;--rail-success:#16634b;
+ --rail-danger:#a62e46;--rail-radius:18px;--rail-shadow:0 8px 28px #17315308;
+ --rail-font:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+ --text-primary:var(--rail-ink);--text-secondary:var(--rail-muted);--accent:var(--rail-brand);--border-default:var(--rail-line);
+ color:var(--rail-ink);background:var(--rail-bg);font-family:var(--rail-font);font-size:16px;
+}
+body{background:var(--rail-bg)}button,input,select,textarea{font-family:inherit}button,a,input,select{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex="0"]:focus-visible{outline:3px solid var(--rail-brand);outline-offset:4px}
+.skip-link{position:fixed;top:12px;left:16px;z-index:1000;transform:translateY(-160%);padding:13px 20px;border-radius:10px;background:var(--rail-brand-dark);color:white;font-weight:650}
+.skip-link:focus{transform:translateY(0)}main[tabindex="-1"]:focus{outline:none}
+body .rail-app{color:var(--rail-ink);background:var(--rail-bg);font-family:var(--rail-font);font-size:16px}
+body .rail-app .primary,body .rail-app .search-submit,body .rail-app .class-book{background:var(--rail-accent);color:white;border:1px solid transparent;font-size:15px;font-weight:650;border-radius:10px;min-height:44px;box-shadow:none;transition:background-color .18s ease,box-shadow .18s ease}
+body .rail-app .primary:hover:not(:disabled),body .rail-app .search-submit:hover:not(:disabled),body .rail-app .class-book:hover:not(:disabled){background:var(--rail-accent-hover);box-shadow:0 4px 12px #b9430a18}
+body .rail-app .secondary{background:var(--rail-surface);border-color:var(--rail-line);color:var(--rail-ink);min-height:44px;font-size:14px;border-radius:10px;box-shadow:none}
+body .rail-app .secondary:hover:not(:disabled){background:var(--rail-soft);border-color:#b8c8dc}
+body .rail-app .text-button{color:var(--rail-brand);font-size:14px;min-height:36px}
+body .rail-app .icon-button{min-width:44px;min-height:44px}
+body .rail-app .eyebrow{font-size:12px;color:var(--rail-muted);letter-spacing:1.3px}
+body .rail-app .error-box{color:#93243b;background:#fff0f2;border-color:#e9b6c2;font-size:14px;border-radius:12px;line-height:1.7}
+body .home-workspace .topbar{background:var(--rail-surface);border-color:var(--rail-line)}
+body .rail-app .brand{font-family:var(--rail-font);font-weight:750;letter-spacing:-1px;color:var(--rail-brand-dark)}
+body .rail-app .brand-icon{background:var(--rail-brand-dark);border-radius:12px;box-shadow:none}
+body .home-workspace .topbar nav button{font-family:var(--rail-font);font-weight:600;color:var(--rail-muted);background:transparent!important;transform:none!important;border:0}
+body .home-workspace .topbar nav button:hover,body .home-workspace .topbar nav button:focus-visible{color:var(--rail-ink)}
+body .home-workspace .topbar nav button.active{color:var(--rail-brand-dark)}
+body .home-workspace .account>.secondary{background:var(--rail-brand-dark);color:white;border:1px solid var(--rail-brand-dark);border-radius:10px;font-size:14px}
+body .home-workspace .account>.secondary:hover{background:#203f69}
+body .home-workspace .home-hero{background:var(--rail-brand-dark);border-radius:22px;box-shadow:none;min-height:308px;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+body .home-hero-copy{padding:28px 36px 62px}
+body .home-kicker{font-size:12px;letter-spacing:1.5px;line-height:1.5;color:#d6e1f3;font-weight:650}
+body .home-hero h1{font-family:var(--rail-font);font-size:clamp(34px,3.3vw,44px);line-height:1.08;letter-spacing:-1.6px;font-weight:750;margin:16px 0 13px;color:white}
+body .home-hero h1 em{color:#ffc184}
+body .home-hero-copy>p{font-size:16px;color:#e0e8f4;line-height:1.6}
+body .home-hero-actions{margin-top:18px;gap:14px 20px}
+body .hero-search-cta{font-size:14px;background:#fff6eb;color:#593319;border:1px solid #ffe0bc;border-radius:10px;min-height:44px;box-shadow:none}
+body .hero-search-cta:hover{background:#ffe7cc;box-shadow:none}
+body .home-guest-note{font-size:13px;color:#e0e8f4}
+body .home-guest-note svg{color:#ffce9b}
+body .scene-sun{background:#f4bd81;opacity:.85}
+body .scene-orbit{border-color:#a5bdd02e;box-shadow:0 0 0 45px #a5bdd007,0 0 0 90px #a5bdd005}
+body .home-rail-scene>svg{filter:drop-shadow(0 15px 10px #07182d28)}
+body .home-rail-scene>svg rect{fill:#34577c}
+body .home-rail-scene>svg path[fill="#76d8c8"]{fill:#efb26f}
+body .home-art-ticket{background:#fffaf2;border:1px solid #f8debd;box-shadow:0 12px 25px #071b2d24;transform:rotate(-2deg);color:#203e62;border-radius:12px}
+body .home-art-ticket>span,body .home-art-ticket>div{color:#526179;font-size:12px}
+body .home-art-ticket>span svg{color:var(--rail-accent)}
+body .home-art-ticket>strong{font-size:18px;font-weight:700;letter-spacing:-.3px}
+body .home-workspace .search-panel{background:var(--rail-surface);border:1px solid var(--rail-line);border-radius:var(--rail-radius);box-shadow:0 12px 30px #172d4910;padding:22px 24px 18px}
+body .home-search-heading h2{font-size:23px;font-weight:700;color:var(--rail-ink);letter-spacing:-.6px}
+body .home-search-heading span{font-size:12px;font-weight:650;letter-spacing:1.2px;color:var(--rail-muted)}
+body .home-workspace .journey-search label{background:#fbfcfe;border-color:#cbd6e4;border-radius:10px;padding:11px 14px;box-shadow:none}
+body .home-workspace .journey-search label>span{color:var(--rail-muted);font-size:12px;letter-spacing:.8px;line-height:1.3}
+body .home-workspace .journey-search label>span svg{color:#526d8e}
+body .home-workspace .journey-search input{font-size:16px;font-weight:600;color:var(--rail-ink)}
+body .home-workspace .journey-search input::placeholder{color:#65768c;font-size:15px}
+body .home-workspace .journey-search label:focus-within{border-color:var(--rail-brand);box-shadow:0 0 0 3px #1e3a8a12}
+body .home-workspace .journey-search .swap-button{background:#fff;border-color:var(--rail-line);color:var(--rail-muted);width:40px;height:44px;min-width:40px}
+body .rail-app.home-workspace .journey-search .search-submit{font-size:15px;padding:0 23px;background:var(--rail-accent);box-shadow:none}
+body .rail-app.home-workspace .journey-search .search-submit:hover:not(:disabled){background:var(--rail-accent-hover)}
+body .home-workspace .local-search-options{gap:10px;font-size:14px}
+body .home-workspace .local-search-options button{background:var(--rail-soft);border:1px solid transparent;border-radius:8px;color:#3c5475;font-size:13px;min-height:40px;padding:9px 12px}
+body .home-workspace .local-search-options button:hover{background:#e1eaf5}
+body .home-workspace .local-search-options select{min-height:40px;border-color:var(--rail-line);font-size:14px;border-radius:8px;color:var(--rail-ink)}
+body .home-workspace .nearby-help{font-size:13px;color:var(--rail-muted);line-height:1.7}
+body .home-workspace .station-suggestions{border-color:var(--rail-line);border-radius:12px;box-shadow:0 12px 32px #142d5220}
+body .home-workspace .station-suggestions li{font-size:15px;min-height:46px;align-items:center}
+body .home-workspace .station-suggestions p,body .home-workspace .station-suggestions strong{font-size:13px;color:var(--rail-muted)}
+body .home-workspace .station-suggestions li:hover,body .home-workspace .station-suggestions li[aria-selected=true]{background:var(--rail-soft);color:var(--rail-brand)}
+body .home-highlights article{background:white;border:1px solid var(--rail-line);box-shadow:none;border-radius:14px;padding:22px;gap:15px}
+body .home-highlights h2{font-size:18px;font-weight:650;color:var(--rail-ink)}
+body .home-highlights p{font-size:14px;color:var(--rail-muted);line-height:1.8}
+body .highlight-icon{background:var(--rail-soft);color:var(--rail-brand);border-radius:11px}
+body .highlight-purple{background:var(--rail-warm);color:#96551c}body .highlight-green{background:#eaf5f0;color:var(--rail-success)}
+body .site-footer{color:var(--rail-muted);border-color:var(--rail-line);padding-left:12px;padding-right:12px}
+body .footer-brand{color:var(--rail-brand-dark)}body .footer-brand>span{background:var(--rail-soft)}
+body .site-footer nav button,body .site-footer nav a{color:var(--rail-muted);font-size:14px;min-height:44px}
+body .site-footer nav button:hover,body .site-footer nav a:hover{color:var(--rail-ink)}
+body .site-footer-bottom,body .footer-brand-block>p{color:var(--rail-muted);font-size:13px}
+/* Search results and class cards share the same visual scale as bookings. */
+body .rail-app .results-heading h2{font-size:26px;color:var(--rail-ink);font-weight:700;letter-spacing:-.7px}
+body .rail-app .results-heading p,body .rail-app .inventory-live-status{font-size:13px;line-height:1.8}
+body .rail-app .result-filters{background:white;border-color:var(--rail-line);border-radius:14px;padding:22px}
+body .rail-app .filter-heading h3{font-size:18px;color:var(--rail-ink)}
+body .rail-app .filter-grid label{font-size:13px;color:var(--rail-muted)}
+body .rail-app .filter-grid select,body .rail-app .filter-grid input{font-size:15px;min-height:46px;border-radius:9px;border-color:#cbd6e4;color:var(--rail-ink)}
+body .rail-app .result-filters>p{font-size:13px;color:var(--rail-muted)}
+body .rail-app .train-card{border:1px solid var(--rail-line);border-radius:18px;box-shadow:var(--rail-shadow);background:white;margin-bottom:24px;overflow:hidden}
+body .rail-app .ticket-ribbon{background:#f7f9fc;border-bottom:1px solid #e6ebf2;padding:14px 24px;gap:0}
+body .rail-app .ticket-ribbon>span:first-child,body .rail-app .ticket-ribbon>strong{background:var(--rail-soft);color:#3c5475;font-size:13px;padding:10px 13px;border-radius:7px 0 0 7px}
+body .rail-app .ticket-ribbon>strong{border-left:1px solid #cbd7e8;border-radius:0 7px 7px 0;color:var(--rail-brand-dark)}
+body .rail-app .ticket-ribbon .ribbon-note{background:transparent;font-size:13px;color:var(--rail-muted)}
+body .rail-app .train-card-top{padding:24px 26px 0}
+body .rail-app .train-card-icon{background:var(--rail-brand-dark);color:white;border-radius:12px;width:42px;height:44px}
+body .rail-app .train-identity h3{font-size:21px;font-weight:700;color:var(--rail-ink);line-height:1.4}
+body .rail-app .service-tag{color:var(--rail-success);background:#eaf5ef;padding:7px 11px;border-radius:20px;font-size:12px}
+body .rail-app .train-route{padding:24px 26px;gap:24px}
+body .rail-app .train-route strong{font-size:34px;font-weight:700;color:var(--rail-ink);letter-spacing:-.9px}
+body .rail-app .train-route>div>span{font-size:14px;line-height:1.6;color:var(--rail-muted)}
+body .rail-app .route-line>span{font-size:13px!important;color:var(--rail-muted)!important}
+body .rail-app .route-line small{font-size:12px;color:var(--rail-muted)}
+body .rail-app .route-line svg,body .rail-app .route-line i:first-child{color:var(--rail-accent)}
+body .rail-app .terminal-match{margin:15px 26px 0;background:var(--rail-warm);border:1px solid #f3ddc6;color:#79532d;font-size:14px;border-radius:10px;padding:12px 15px}
+body .rail-app .inventory-caption{font-size:12px;color:var(--rail-muted);margin:0 26px 20px}
+body .rail-app .available-classes{font-family:var(--rail-font);padding:0;margin:0 26px 14px;background:transparent;border:0;box-shadow:none;border-radius:0}
+.availability-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+.availability-heading h3{font-size:16px;color:var(--rail-ink);font-weight:650;margin:0;letter-spacing:0}
+.class-scroll-actions{display:flex;gap:8px}.class-scroll-actions button{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;border:1px solid var(--rail-line);background:white;color:var(--rail-muted)}
+.class-scroll-actions button:hover{color:var(--rail-brand);background:var(--rail-soft)}
+body .rail-app .availability-scroll{gap:16px;padding:3px 2px 14px;scrollbar-color:#aebfd2 transparent}
+body .rail-app .availability-tile{flex-basis:266px;min-height:214px;padding:18px;border:1px solid #cfdbe9;border-radius:12px;box-shadow:none;background:#fff}
+body .rail-app .availability-tile.is-selected{border-color:var(--rail-brand);box-shadow:0 0 0 2px #1e3a8a12;background:#f8faff}
+body .rail-app .availability-title h4{font-size:17px;line-height:1.5;font-family:var(--rail-font);color:var(--rail-ink);font-weight:650}
+body .rail-app .class-refresh{display:grid;place-items:center;min-width:44px;min-height:44px;width:44px;height:44px;margin:-9px -8px 0 0;color:var(--rail-muted);border-radius:9px}
+body .rail-app .class-refresh:hover:not(:disabled){background:var(--rail-soft);color:var(--rail-brand)}
+body .rail-app .availability-status{margin:16px 0 24px;min-height:28px;font-size:14px;line-height:1.7;font-weight:600}
+body .rail-app .availability-status.has-seats{color:var(--rail-success)}body .rail-app .availability-status.is-waitlisted{color:#92501c}
+body .rail-app .availability-bottom strong{font-size:23px;color:var(--rail-ink);font-weight:700;letter-spacing:-.4px}
+body .rail-app .availability-bottom small{font-size:12px;color:var(--rail-muted)}
+body .rail-app .class-book{padding:12px 16px;border-radius:9px;font-family:var(--rail-font);font-size:13px;min-width:84px}
+body .rail-app .class-book:disabled{opacity:1;background:#eef1f6;color:#59687e;border:1px solid #d4dce6;box-shadow:none}
+/* Booking, passenger review and payment surfaces. */
+body .booking-route-page .booking-checkout{font-family:var(--rail-font);color:var(--rail-ink);background:transparent}
+body .rail-app .booking-checkout .checkout-heading{background:var(--rail-brand-dark);border-radius:18px;padding:26px;color:white}
+body .rail-app .checkout-heading h2{font-size:32px;color:white;font-weight:700}
+body .rail-app .checkout-heading .eyebrow,body .rail-app .checkout-heading p{color:#e1e8f4}
+body .booking-route-page .booking-checkout>h1{font-size:34px;color:var(--rail-ink);letter-spacing:-.8px}
+body .booking-route-page .booking-checkout>p{font-size:16px;color:var(--rail-muted)}
+body .rail-app .booking-stage-strip{gap:28px;border-color:var(--rail-line)}
+body .rail-app .booking-stage-strip li{font-size:14px;color:var(--rail-muted)}
+body .rail-app .booking-stage-strip .active{color:var(--rail-brand)}body .rail-app .booking-stage-strip .active b{background:var(--rail-brand);box-shadow:none}
+body .rail-app .passenger-list-panel,body .rail-app .contact-form,body .rail-app .fare-summary{background:white;border:1px solid var(--rail-line);border-radius:18px;box-shadow:var(--rail-shadow);padding:24px}
+body .rail-app .passenger-panel-heading h2,body .rail-app .contact-form h3,body .rail-app .panel-title h3{font-size:21px;color:var(--rail-ink)}
+body .rail-app .passenger-panel-heading p,body .rail-app .panel-title p,body .rail-app .contact-form p{font-size:14px;color:var(--rail-muted);line-height:1.75}
+body .rail-app .passenger-limit,body .rail-app .requested-berth{background:var(--rail-soft);color:#405b80;font-size:12px;border-color:var(--rail-line)}
+body .rail-app .passenger-section-icon,body .rail-app .traveller-avatar{background:var(--rail-soft);color:var(--rail-brand)}
+body .rail-app .passenger-summary-card{background:#f9fbfe;border:1px solid var(--rail-line);border-radius:12px}
+body .rail-app .passenger-summary-card strong{font-size:17px;color:var(--rail-ink)}body .rail-app .passenger-summary-card p{font-size:14px;color:var(--rail-muted)}
+body .rail-app .traveller-actions button{width:44px;height:44px;color:var(--rail-brand);border-color:var(--rail-line)}
+body .rail-app .traveller-actions button:last-child{color:var(--rail-danger)}
+body .rail-app .add-passenger-button{font-size:15px;border-radius:10px;padding:15px;min-height:48px;border:1px dashed #9fb3d2;background:#f7faff;color:var(--rail-brand)}
+body .rail-app .contact-form label{font-size:14px;color:var(--rail-muted)}
+body .rail-app .contact-form input{font-size:16px;border-radius:10px;min-height:50px;border-color:#cbd6e4;background:white;color:var(--rail-ink)}
+body .rail-app .fare-summary h3{font-size:25px;color:var(--rail-ink)}body .rail-app .fare-summary dl{font-size:15px}
+body .rail-app .fare-summary dt{color:var(--rail-muted)}body .rail-app .fare-total{background:var(--rail-warm);color:#73380f;border-color:#f1d8be}
+body .rail-app .fare-total dd{color:#8e3a11;font-weight:750}
+body .rail-app .fare-disclaimer,body .rail-app .stored-fare,body .rail-app .privacy-note,body .rail-app .gateway-note,body .rail-app .locked-note{font-size:13px;color:var(--rail-muted);line-height:1.75}
+body .rail-app .allocation-note,body .rail-app .review-consent{background:var(--rail-soft);border-color:var(--rail-line);color:#3f5778;font-size:14px}
+body .rail-app .review-travellers>div{border-color:var(--rail-line);border-left-color:var(--rail-brand);box-shadow:none;border-radius:12px}
+body .rail-app .review-travellers strong{color:var(--rail-ink);font-size:18px}body .rail-app .review-travellers p{font-size:14px;color:var(--rail-muted)}
+body .rail-app .review-seat{background:var(--rail-soft);color:var(--rail-brand);border-radius:10px;font-size:16px}
+body .rail-app .review-contact{background:#edf6f1;border:1px solid #d4e8dc;border-radius:12px}
+body .rail-app .preference-summary{background:var(--rail-soft);color:#3e5575;font-size:14px}
+body .rail-app .other-preferences{font-family:var(--rail-font);background:#f7f9fc;border:1px solid var(--rail-line);border-radius:16px}
+body .rail-app .other-preferences>summary{font-size:19px;color:var(--rail-ink);min-height:44px}
+body .rail-app .preference-icon{color:var(--rail-accent);border-color:var(--rail-line)}
+body .rail-app .preference-option,body .rail-app .preference-field{background:white;border:1px solid var(--rail-line);border-radius:10px;box-shadow:none;color:var(--rail-ink)}
+body .rail-app .preference-field small,body .rail-app .other-preferences-help{font-size:13px;color:var(--rail-muted)}
+body .rail-app .preference-option input{accent-color:var(--rail-brand)}
+body .rail-app .checkout-actions .primary{border-radius:10px;font-size:15px;padding:14px 22px;min-height:48px}
+/* Bookings and confirmed tickets. */
+body .rail-app .booking-card{border-color:var(--rail-line);border-radius:18px;box-shadow:var(--rail-shadow);background:white}
+body .rail-app .book-card-heading h2{font-size:23px;color:var(--rail-ink)}body .rail-app .book-reference,body .rail-app .book-created{color:var(--rail-muted);font-size:13px}
+body .rail-app .book-card-total>strong{color:var(--rail-brand-dark);font-size:28px}
+body .rail-app .book-journey{background:var(--rail-soft);border-color:#d5dfed;border-radius:13px}
+body .rail-app .book-journey-date,body .rail-app .book-route p{color:#2f486d}
+body .rail-app .book-route>div>strong{color:var(--rail-brand-dark);font-size:30px}
+body .rail-app .book-class{color:#425b7b;border-color:#d3dfec}
+body .rail-app .book-passengers li{background:#fbfcfe;border-color:var(--rail-line);border-radius:12px}
+body .rail-app .book-passengers li p,body .rail-app .book-passengers li small{color:var(--rail-muted)}
+body .rail-app .book-person-number{background:var(--rail-warm);color:#965022}
+body .rail-app .booking-filter-tabs button{min-height:44px;font-size:14px;border-radius:10px;border-color:var(--rail-line);color:var(--rail-muted)}
+body .rail-app .booking-filter-tabs button[aria-pressed=true]{background:var(--rail-brand-dark);border-color:var(--rail-brand-dark);color:white}
+body .rail-app .payment-status{background:#f8fafd;border-color:var(--rail-line);border-radius:13px;padding:21px}
+body .rail-app .payment-status-heading h3{font-size:18px;color:var(--rail-ink)}
+body .rail-app .payment-reference button{min-height:40px;background:var(--rail-soft);color:var(--rail-brand)}
+body .rail-app .payment-help,body .rail-app .payment-last-check,body .rail-app .payment-reference code{color:var(--rail-muted);font-size:13px}
+body .rail-app .refund-ledger-row{background:var(--rail-soft);border-color:var(--rail-line)}
+body .rail-app .booking-emails li{border:1px solid #d9e8df;background:#f0f7f3}
+body .rail-app .confirmation-page{font-family:var(--rail-font);background:transparent;padding:20px 0;color:var(--rail-ink)}
+body .rail-app .confirmation-banner{background:#eaf6ef;border-color:#cbe4d6;border-radius:18px}
+body .rail-app .confirmation-banner h2{font-size:32px;letter-spacing:-.7px;color:#15543f}
+body .rail-app .confirmation-ticket{border-color:var(--rail-line);border-radius:18px;box-shadow:var(--rail-shadow)}
+body .rail-app .confirmation-ticket-top{background:var(--rail-brand-dark)}
+body .rail-app .confirmation-route{background:var(--rail-soft)}body .rail-app .confirmation-route>div>h3{color:var(--rail-brand-dark)}
+body .rail-app .confirmation-schedule{background:var(--rail-warm);border:1px solid #efdac5;border-radius:12px}
+body .rail-app .confirmation-schedule small,body .rail-app .confirmation-schedule span,body .rail-app .confirmation-schedule>p{color:#79502f}
+body .rail-app .confirmation-schedule strong{color:#733c18}
+body .rail-app .confirmed-passenger{border-color:var(--rail-line);border-radius:14px}
+body .rail-app .confirmed-allocation{background:var(--rail-soft);color:var(--rail-brand-dark)}
+body .rail-app .confirmation-total{background:#edf7f1;border-color:#d5e9dc}
+/* Native modal surfaces (passenger, nearby terminals, help, and sign-in). */
+body .booking-dialog{font-family:var(--rail-font);background:white;color:var(--rail-ink);border:1px solid var(--rail-line);border-radius:20px;box-shadow:0 24px 90px #142d5238;padding:28px}
+body .booking-dialog::backdrop,.auth-surface::backdrop{background:#10243d8c;backdrop-filter:blur(4px)}
+body .booking-dialog-heading{border-color:var(--rail-line)}body .booking-dialog-heading h2{color:var(--rail-ink);font-size:27px;letter-spacing:-.7px}
+body .dialog-close{background:var(--rail-soft);color:var(--rail-muted);box-shadow:none;min-width:44px;min-height:44px}
+body .terminal-caption{font-size:17px;color:var(--rail-ink)}body .terminal-route{background:var(--rail-soft);border-color:#bdccdf;color:var(--rail-brand-dark);border-radius:12px}
+body .terminal-route.is-actual{background:var(--rail-warm);border-color:#e6c5a0;color:#75411d}
+body .terminal-route small,body .terminal-help,body .terminal-class{font-size:14px;color:var(--rail-muted)}
+body .passenger-dialog-form label{font-size:14px;color:var(--rail-muted);background:#fafcfe;border-color:#c7d4e3;border-radius:10px;padding:13px 16px}
+body .passenger-dialog-form input,body .passenger-dialog-form select{font-family:var(--rail-font);font-size:17px;min-height:32px;color:var(--rail-ink)}
+body .passenger-dialog-form>p,body .passenger-dialog-form small{font-size:14px;color:var(--rail-muted)}
+body .dialog-actions{border-color:var(--rail-line)}body .dialog-actions .primary{background:var(--rail-accent);border-radius:10px;font-size:15px;min-height:46px}
+body .dialog-actions .secondary{border-radius:10px;font-size:15px;min-height:46px;border-color:var(--rail-line);color:var(--rail-ink)}
+.auth-surface{font-family:var(--rail-font);width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);margin:auto;padding:34px;border:1px solid var(--rail-line);border-radius:20px;background:white;color:var(--rail-ink);box-shadow:0 24px 90px #142d5238;overflow:auto;overscroll-behavior:contain}
+.auth-close{position:absolute;top:14px;right:14px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:10px;background:var(--rail-soft);color:var(--rail-muted)}
+.auth-surface .login-page{display:block;min-height:0;padding:0;background:transparent;overflow:visible}
+.auth-surface .login-bg{display:none}.auth-surface .login-container{font-family:var(--rail-font);width:100%;max-width:none;padding:0;border:0;border-radius:0;background:white;box-shadow:none;backdrop-filter:none}
+.auth-surface .login-logo{margin:15px 0 25px}.auth-surface .logo-icon{background:var(--rail-brand-dark);border-radius:12px;box-shadow:none}
+.auth-surface .login-logo h1{color:var(--rail-brand-dark);font-size:30px}.auth-surface .login-logo h1 span{color:var(--rail-brand-dark)}
+.auth-surface .login-subtitle{font-size:14px;color:var(--rail-muted)}
+.auth-surface .login-form h2{font-size:25px;letter-spacing:-.5px;color:var(--rail-ink)}
+.auth-surface .login-form{gap:18px}.auth-surface .input-group label{font-size:14px;color:var(--rail-muted);font-weight:600}
+.auth-surface .input-group input{font-family:var(--rail-font);font-size:16px;min-height:50px;border:1px solid #c7d4e3;border-radius:10px;background:#fbfcfe;color:var(--rail-ink)}
+.auth-surface .input-group input:focus{border-color:var(--rail-brand);box-shadow:0 0 0 3px #1e3a8a12}
+.auth-surface .login-btn{background:var(--rail-accent);color:white;border-radius:10px;box-shadow:none;min-height:48px;font-size:16px}
+.auth-surface .login-btn:hover:not(:disabled){background:var(--rail-accent-hover);box-shadow:none}
+.auth-surface .guest-btn{font-size:14px;min-height:40px;color:var(--rail-brand);padding:9px 0}
+.auth-surface .eye-btn{width:44px;height:44px;color:var(--rail-muted)}
+.auth-surface .login-footer{font-size:12px;color:var(--rail-muted);margin-top:22px}
+@media(max-width:1100px){body .home-hero h1{font-size:37px}body .home-hero-copy{padding-left:28px;padding-right:26px}body .home-guest-note{font-size:12px}}
+@media(max-width:750px){body .home-workspace .home-hero{grid-template-columns:1fr;min-height:0;border-radius:18px}body .home-hero-copy{padding:24px 22px 48px}body .home-hero h1{font-size:35px;margin:13px 0}body .home-kicker{font-size:11px}body .home-hero-copy>p{font-size:15px}body .home-guest-note{font-size:11px}body .home-hero-actions{gap:12px;flex-wrap:nowrap}body .hero-search-cta{font-size:13px;padding:10px 12px}body .home-workspace .search-panel{margin-left:8px;margin-right:8px;padding:20px 16px 18px;border-radius:15px}body .home-workspace .journey-search label{padding:11px 12px}body .home-workspace .journey-search label>span{font-size:11px}body .home-workspace .journey-search .search-submit{font-size:16px}body .rail-app .train-card-top{padding:20px 18px 0}body .rail-app .train-identity h3{font-size:19px}body .rail-app .train-route{padding:20px 18px;gap:14px}body .rail-app .train-route strong{font-size:28px}body .rail-app .train-route>div>span{font-size:13px}body .rail-app .route-line>span{font-size:12px!important}body .rail-app .service-tag{display:none}body .rail-app .terminal-match{margin:14px 18px 0;font-size:13px}body .rail-app .available-classes{margin:0 18px 14px}body .rail-app .availability-tile{flex-basis:250px;padding:16px}body .rail-app .availability-bottom strong{font-size:22px}body .rail-app .inventory-caption{margin:0 18px 18px}body .rail-app .booking-stage-strip{gap:15px}body .rail-app .booking-stage-strip li{font-size:12px}body .rail-app .confirmation-banner h2{font-size:27px}body .booking-route-page .booking-checkout>h1{font-size:29px}body .rail-app .passenger-list-panel,body .rail-app .contact-form,body .rail-app .fare-summary{padding:20px}body .booking-dialog{padding:24px 20px;border-radius:17px}body .booking-dialog-heading h2{font-size:24px}.auth-surface{padding:30px 24px}}
+@media(max-width:390px){body .home-hero h1{font-size:32px}body .home-hero-copy{padding-left:20px;padding-right:20px}body .home-guest-note{font-size:11px;white-space:normal}body .home-hero-actions{align-items:center}body .rail-app .booking-stage-strip{gap:10px}body .rail-app .booking-stage-strip li{font-size:11px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

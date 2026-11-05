@@ -1,0 +1,5 @@
+{% extends "admin/index.html" %}
+{% block content %}
+<div class="module" style="padding:20px;margin-bottom:24px"><h2>Railwise operations</h2><p>Monitor payment exceptions, refund delays and email failures.</p><a href="{% url 'railwise-operations' %}">Open operations dashboard →</a><p>Requires booking, payment, refund, email and audit view permissions.</p></div>
+{{ block.super }}
+{% endblock %}

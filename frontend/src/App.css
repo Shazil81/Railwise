@@ -1,0 +1,11 @@
+#root{min-height:100vh}.app-layout{min-height:100vh}
+.auth-overlay{position:fixed;inset:0;z-index:20;background:#f4f7fc;overflow:auto}
+.account-email-banner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;padding:10px 20px;background:#edf3ff;color:#254578;font-size:13px;overflow-wrap:anywhere}
+/* Keep the current page visible when signing in instead of replacing it. */
+.auth-overlay{background:#16264655;backdrop-filter:blur(5px);display:flex;align-items:flex-start;justify-content:center;padding:24px;animation:auth-reveal .16s ease-out;overscroll-behavior:contain}
+.auth-overlay .login-page{width:100%;min-height:calc(100dvh - 48px);background:transparent;padding:0;overflow:visible}
+.auth-overlay .login-bg{display:none}.auth-overlay .login-container{max-width:460px;padding:30px 34px;border-radius:22px;box-shadow:0 22px 80px #12203e38}.auth-overlay .login-logo{margin-bottom:22px}.auth-overlay .login-logo .logo-icon{width:45px;height:45px;margin-bottom:12px;border-radius:13px}.auth-overlay .login-logo h1{font-size:29px}.auth-overlay .login-logo .login-subtitle{font-size:14px}.auth-overlay .login-form{gap:15px}.auth-overlay .login-footer{margin-top:16px}
+@keyframes auth-reveal{from{opacity:0}to{opacity:1}}
+@media(max-width:520px){.auth-overlay{padding:16px}.auth-overlay .login-page{min-height:calc(100dvh - 32px)}.auth-overlay .login-container{padding:27px 22px}}
+@media(prefers-reduced-motion:reduce){.auth-overlay{animation:none}}
+body:has(.auth-overlay){overflow:hidden}
