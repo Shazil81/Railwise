@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Journey } from './api';
 import { inventorySegments, mergeInventory } from './inventory';
+import { API_BASE_URL } from './apiBase';
 
 export function useSeatInventory(journeys:Journey[],enabled:boolean,setJourneys:Dispatch<SetStateAction<Journey[]>>) {
   const [status,setStatus]=useState('Connecting to seat updates…');
@@ -14,7 +15,7 @@ export function useSeatInventory(journeys:Journey[],enabled:boolean,setJourneys:
     let failures=0;
     const connect=()=>{
       if(!active)return;
-      stream=new EventSource('/api/inventory/stream/?segments='+encodeURIComponent(segments));
+      stream=new EventSource(API_BASE_URL+'/inventory/stream/?segments='+encodeURIComponent(segments));
       stream.addEventListener('inventory',event=>{
       if(!active)return;
       try {

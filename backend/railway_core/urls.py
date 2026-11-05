@@ -19,8 +19,10 @@ from django.urls import include, path
 from bookings.accounts import LoginView, SignupView, LogoutView
 from bookings.account_links import RequestLinkView, RequestResetView, ConsumeLinkView, ResetPasswordView, AccountStatusView
 from bookings.operations import operations_dashboard, retry_email_view
+from .health import health
 
 urlpatterns = [
+    path('api/health/', health),
     path('admin/operations/', admin.site.admin_view(operations_dashboard), name='railwise-operations'),
     path('admin/operations/emails/<int:notification_id>/retry/', admin.site.admin_view(retry_email_view), name='railwise-email-retry'),
     path("admin/", admin.site.urls),

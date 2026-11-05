@@ -10,12 +10,15 @@ They are not HTTP load measurements or production capacity claims.
 
 ## Checks on this checkout
 
-- Frontend: 35 tests passed; lint passed; production build passed.
+- Frontend: 36 tests passed; lint passed; production build passed.
 - Windows: six startup regression checks passed; installed shortcut matches this project.
 - Running supervisor heartbeat: operations mode; worker and beat running.
 - Startup launcher smoke test: reached READY after fixing child script path quoting.
 - Production settings: Django `check --deploy` passed with synthetic HTTPS/domain/secret inputs.
-- Backend full regression: all 233 tests passed in 113.830 seconds using isolated test settings and PostgreSQL.
+- Backend full regression: all 238 tests passed in 169.929 seconds using isolated test settings and PostgreSQL.
+- Cloud settings: TLS-only Redis, required PostgreSQL URL, pooled-connection cursor safety,
+  explicit CORS origin and production `check --deploy` passed with synthetic inputs.
+- Public health endpoint returns a safe 503 on database failure without leaking connection details.
 
 The test settings isolate email/cache/Celery broker and use a fast test-only hasher.
 Inventory/constraints still use PostgreSQL. Never serve using test_settings.
@@ -38,7 +41,7 @@ were re-tested during this documentation/release run.
 
 ## Focused usability and lifecycle improvements — 5 November 2026
 
-- The current regression run passed all 233 backend tests and 35 frontend tests.
+- The earlier UI regression run passed all 233 backend tests and 35 frontend tests.
 - Public browsing no longer loads Razorpay; the payment action loads the SDK once,
   with timeout/error cleanup and retry. A browser smoke check opened Test Mode
   checkout using the lazy loader. It made no payment; the unpaid hold was cancelled.

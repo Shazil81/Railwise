@@ -1,8 +1,9 @@
 import {clearPassengerDrafts} from './passengerDraft.ts';
 import axios from 'axios';
+import { API_BASE_URL } from './apiBase.ts';
 import { authSession } from './authSession.ts';
 
-const api = axios.create({ baseURL: '/api', timeout: 15000 });
+const api = axios.create({ baseURL: API_BASE_URL, timeout: 15000 });
 
 api.interceptors.request.use(config => {
   const token = authSession.read().token;

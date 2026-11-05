@@ -1,0 +1,25 @@
+# Free web API only. Background workers and beat require paid Render compute.
+services:
+  - type: web
+    name: railwise-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: bash build.sh
+    startCommand: python manage.py migrate --noinput && python manage.py seed_data && gunicorn railway_core.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --worker-class gthread --threads 8 --timeout 120 --access-logfile -
+    healthCheckPath: /api/health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.9
+      - key: DJANGO_SETTINGS_MODULE
+        value: railway_core.cloud
+      - key: SECRET_KEY
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
