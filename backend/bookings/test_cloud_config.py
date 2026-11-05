@@ -18,6 +18,8 @@ class CloudConfigTests(SimpleTestCase):
             'assert c.DATABASES["default"]["OPTIONS"]["sslmode"] == "require"; '
             'assert c.DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"]; '
             'assert c.CELERY_BROKER_USE_SSL["ssl_cert_reqs"] == 2; '
+            'assert c.CELERY_BROKER_TRANSPORT_OPTIONS["global_keyprefix"] == "railwise:"; '
+            'assert c.CELERY_RESULT_BACKEND_TRANSPORT_OPTIONS["global_keyprefix"] == "railwise:"; '
             'assert c.CORS_ALLOWED_ORIGINS == ["https://railwise.vercel.app"]'],
             env=env, cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
 

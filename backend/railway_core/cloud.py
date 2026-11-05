@@ -16,7 +16,10 @@ DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': ssl.CERT_REQUIRED}
 CELERY_REDIS_BACKEND_USE_SSL = {'ssl_cert_reqs': ssl.CERT_REQUIRED}
 # Reduce idle polling/command consumption on metered Redis.
-CELERY_BROKER_TRANSPORT_OPTIONS = {'polling_interval': 5, 'visibility_timeout': 3600}
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'polling_interval': 5, 'visibility_timeout': 3600, 'global_keyprefix': 'railwise:',
+}
+CELERY_RESULT_BACKEND_TRANSPORT_OPTIONS = {'global_keyprefix': 'railwise:'}
 CELERY_WORKER_ENABLE_REMOTE_CONTROL = False
 CELERY_WORKER_SEND_TASK_EVENTS = False
 CELERY_TASK_IGNORE_RESULT = True

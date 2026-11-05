@@ -1,7 +1,8 @@
 # Deployment runbook
 
 Templates in `deploy/` target a Linux host, same-origin React/Nginx + Django/Gunicorn,
-PostgreSQL and Redis. They are prepared configuration, not an already deployed site.
+PostgreSQL and Redis. For the hosted Vercel/Render/Neon/Upstash demo, use
+[the cloud runbook](CLOUD_DEPLOYMENT.md); the Linux templates themselves are not installed there.
 Keep Razorpay in Test Mode for this portfolio. No railway API is required.
 
 ## Prepare

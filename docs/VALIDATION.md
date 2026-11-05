@@ -34,7 +34,7 @@ were re-tested during this documentation/release run.
 ## Checks still requiring environment/user action
 
 - Physical Windows reboot/sign-in (the launcher smoke test does not reproduce a cold boot).
-- Chosen-host deployment, real DNS/certificate and public webhook delivery.
+- Public webhook delivery and a fresh hosted captured-payment/PDF/refund check.
 - Scheduled encrypted backup and restore rehearsal into a separate DB.
 - Fresh phone-browser smoke check and a sanitized video recording.
 - CI status on GitHub after this push; local passing tests do not imply CI has run.
@@ -58,5 +58,6 @@ were re-tested during this documentation/release run.
 - Missing routes display a 404 screen with Home recovery.
 
 Physical touch/screen-reader testing and production capacity remain unverified.
-No deployment was performed. Earlier successful gateway capture/PDF/refund evidence
-remains the separate dated integration check above.
+The later cloud deployment is recorded in [the cloud runbook](CLOUD_DEPLOYMENT.md).
+Earlier successful gateway capture/PDF/refund evidence remains the separate dated
+integration check above, not a claim that it was repeated on the free hosted environment.

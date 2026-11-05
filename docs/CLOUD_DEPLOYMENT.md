@@ -3,6 +3,23 @@
 Deployment is not complete until the public URLs and payment flow are verified.
 Use a new Neon database; do not upload local users, bookings or database dumps.
 
+## Hosted resources — 5 November 2026
+
+- Frontend: https://railwise-phi.vercel.app/ (Vercel Hobby, root `frontend`).
+- API: https://railwise-api.onrender.com/ (Render Free, Singapore, root `backend`).
+- Database: dedicated Neon `railwise` PostgreSQL 18 project in Singapore.
+- Redis: existing authorized Upstash free instance, with `railwise-production`
+  cache prefix and `railwise:` broker/result prefix for any future Celery processes.
+  Existing applications' keys are not changed or flushed.
+- No local user data/database dump was imported; only the bundled catalogue was seeded.
+- A new synthetic account verified signup/login, two-passenger holds, fare review,
+  creation of a real Razorpay **test order**, unpaid PDF denial, cancellation and logout.
+  No test payment was captured in this deployment smoke check.
+- Health, station lookup, nearby-terminal search (8 PNBE/HWH results on 6 November),
+  and Redis-backed SSE class counts were verified over public HTTPS.
+- Email, scheduled recovery, public webhook delivery and a fresh captured-payment/PDF
+  flow remain unverified on this hosted environment. Do not infer them from local tests.
+
 ## Free plan limits
 
 - Render Free API sleeps after inactivity and shares monthly free compute hours

@@ -2,6 +2,12 @@
 
 ![Railwise — thoughtful journeys, reliable bookings](docs/assets/railwise-banner.svg)
 
+**[Open the live demo](https://railwise-phi.vercel.app/)** · [API health](https://railwise-api.onrender.com/api/health/)
+
+Hosted on Vercel + Render Free, with Neon PostgreSQL and Upstash Redis. The API can
+take about a minute to wake up. This free deployment has no always-on Celery
+worker/beat or inbox email delivery; background automation requires separate setup.
+
 ## Tech stack
 
 ![Railwise tech stack with original technology logos](docs/assets/tech-stack.svg)
@@ -18,7 +24,7 @@
 | **Payments & tickets** | Razorpay Test Mode, ReportLab | Verified test transactions and server-generated PDF tickets |
 | **Development & CI** | Docker Compose, GitHub Actions | Local dependencies and automated regression checks |
 
-Nginx, Gunicorn and systemd deployment templates are also included. Public hosting has not been deployed.
+Gunicorn serves the Render API. Nginx/systemd templates are also included for a separate Linux-host deployment.
 
 </details>
 
@@ -191,6 +197,6 @@ Use fictional data in public screenshots/video. Only the four reviewed demo capt
 
 ## Scope
 
-Saved timetables can age and catalogue coverage is finite. Availability belongs to this app, pricing is illustrative, and refunds in Test Mode do not move real money. Berth preferences are requests, and no official PNR is issued. Deployment templates require a chosen host/domain and environment-specific checks.
+Saved timetables can age and catalogue coverage is finite. Availability belongs to this app, pricing is illustrative, and refunds in Test Mode do not move real money. Berth preferences are requests, and no official PNR is issued. The free hosted demo has the background-job and email limitations described above.
 
 [License](LICENSE)
