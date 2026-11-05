@@ -2,6 +2,26 @@
 
 ![Railwise — thoughtful journeys, reliable bookings](docs/assets/railwise-banner.svg)
 
+## Tech stack
+
+![Railwise tech stack with original technology logos](docs/assets/tech-stack.svg)
+
+<details>
+<summary><strong>What each technology does</strong></summary>
+
+| Layer | Technologies | Responsibility |
+| --- | --- | --- |
+| **Frontend** | React, TypeScript, Vite, React Router, Lucide | Responsive search, passenger forms, checkout and booking management |
+| **API** | Python, Django, Django REST Framework | Validation, ownership, fare calculation and reservation workflows |
+| **Database** | PostgreSQL | Transactional inventory, segment constraints and durable records |
+| **Background jobs** | Celery worker, Celery Beat, Redis | Scheduled hold expiry, payment/refund reconciliation and email delivery |
+| **Payments & tickets** | Razorpay Test Mode, ReportLab | Verified test transactions and server-generated PDF tickets |
+| **Development & CI** | Docker Compose, GitHub Actions | Local dependencies and automated regression checks |
+
+Nginx, Gunicorn and systemd deployment templates are also included. Public hosting has not been deployed.
+
+</details>
+
 [![Regression checks](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml/badge.svg)](https://github.com/Shazil81/Railwise/actions/workflows/ci.yml)
 [![Backend tests](https://img.shields.io/badge/Backend_tests-232_passed-16634b?style=flat-square)](docs/VALIDATION.md)
 [![Frontend tests](https://img.shields.io/badge/Frontend_tests-32_passed-16634b?style=flat-square)](docs/VALIDATION.md)
@@ -9,11 +29,26 @@
 
 **A railway booking portfolio project built around scarce inventory, payment uncertainty and recoverable workflows.**
 
-**Explore:** [Problems solved](#problems-solved) · [Tech stack](#tech-stack) · [Architecture](#architecture) · [Local setup](#run-locally) · [Test evidence](#tests-and-evidence)
+**Explore:** [Problems solved](#problems-solved) · [Tech stack](#tech-stack) · [Screenshots](#app-screenshots) · [Architecture](#architecture) · [Local setup](#run-locally) · [Test evidence](#tests-and-evidence)
 
 Railwise lets guests discover saved Indian train routes, compare class fares and then sign in to book. The backend owns the demo inventory: it allocates berths, holds them during checkout, verifies payment evidence and reconciles cancellations/refunds asynchronously.
 
 > Independent portfolio demo. Timetables are saved snapshots; fares and seat inventory are simulated. Tickets are not valid for travel. No runtime railway API is required.
+
+## App screenshots
+
+Captured from the running app with fictional demo passengers. Click a screenshot to view it at full size. The confirmation shows a previously verified Razorpay Test Mode booking.
+
+<table>
+<tr>
+<td width="50%" valign="top"><h3>01 · Home</h3><p>Guest search, station suggestions and journey planning.</p><a href="docs/assets/screenshots/home.jpg"><img src="docs/assets/screenshots/home.jpg" alt="Railwise home with train search and journey planning" width="100%" /></a></td>
+<td width="50%" valign="top"><h3>02 · Train results</h3><p>Filters, departure/arrival times, class fares and local seat counts.</p><a href="docs/assets/screenshots/train-results.jpg"><img src="docs/assets/screenshots/train-results.jpg" alt="Patna to Howrah train results with filters and class availability" width="100%" /></a></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><h3>03 · Passenger details</h3><p>Traveller cards, contact form, preferences and estimated fare.</p><a href="docs/assets/screenshots/passenger-details.jpg"><img src="docs/assets/screenshots/passenger-details.jpg" alt="Passenger page with fictional demo traveller, preferences and fare summary" width="100%" /></a></td>
+<td width="50%" valign="top"><h3>04 · Booking confirmation</h3><p>Verified payment, journey schedule and confirmed coach/seat.</p><a href="docs/assets/screenshots/booking-confirmation.jpg"><img src="docs/assets/screenshots/booking-confirmation.jpg" alt="Verified test booking confirmation with journey times and coach C1 seat 1" width="100%" /></a></td>
+</tr>
+</table>
 
 ## Problems solved
 
@@ -42,31 +77,6 @@ Railwise lets guests discover saved Indian train routes, compare class fares and
 | **Different city terminals** | Offline terminal groups + booking confirmation | Actual boarding/arrival stations stay explicit |
 
 The project demonstrates these engineering problems; it does not claim they are unhandled defects in the real IRCTC system.
-
-## Tech stack
-
-![React](https://img.shields.io/badge/React-142d52?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
-![Celery](https://img.shields.io/badge/Celery-37814A?style=for-the-badge&logo=celery&logoColor=white)
-![Razorpay Test Mode](https://img.shields.io/badge/Razorpay-Test_Mode-0C2451?style=for-the-badge&logo=razorpay&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
-
-| Layer | Technologies | Responsibility |
-| --- | --- | --- |
-| **Frontend** | React, TypeScript, Vite, React Router, Lucide | Responsive search, passenger forms, checkout and booking management |
-| **API** | Python, Django, Django REST Framework | Validation, ownership, fare calculation and reservation workflows |
-| **Database** | PostgreSQL | Transactional inventory, segment constraints and durable records |
-| **Background jobs** | Celery worker, Celery Beat, Redis | Scheduled hold expiry, payment/refund reconciliation and email delivery |
-| **Payments & tickets** | Razorpay Test Mode, ReportLab | Verified test transactions and server-generated PDF tickets |
-| **Development & CI** | Docker Compose, GitHub Actions | Local dependencies and automated regression checks |
-
-**Deployment preparation:** Nginx, Gunicorn and systemd templates are included. Public hosting has not been deployed.
 
 ## User experience
 
@@ -166,7 +176,7 @@ python backend/manage.py test bookings.test_load --settings=railway_core.test_se
 5. Explain the exclusion constraint, atomic group allocation, hold expiry and callback-loss recovery.
 6. Present the contention report and explain its limits.
 
-Use fictional data in public screenshots/video. Previous screenshots containing contact/payment records are intentionally excluded from publishing.
+Use fictional data in public screenshots/video. Only the four reviewed demo captures above are published; private screenshots and payment/contact records are excluded.
 
 ## Documentation
 
